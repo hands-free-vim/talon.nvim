@@ -1,3 +1,5 @@
+local Config = require("talon.config")
+
 local TalonGroup = vim.api.nvim_create_augroup("Talon", { clear = true })
 
 -- Accomodate the long titlestring values
@@ -29,7 +31,12 @@ local update_title = function()
     vim.cmd("redraw")
 end
 
-local function setup()
+local function setup(user_config)
+    local config = Config.merge_config(user_config)
+
+    -- Call once to get the title updated ASAP for talon recognition
+    update_title()
+
     -- Update the title when the mode or text changes. This ensures Talon can detect the mode
     vim.api.nvim_create_autocmd({ "ModeChanged", "TextChangedT", "FileType" }, {
         callback = update_title,
@@ -92,10 +99,10 @@ local function setup()
     vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
         pattern = "term://*",
         callback = function()
-            local ok, terminal_cursor_line =
+            local ok, terminal_mode =
                 pcall(vim.api.nvim_buf_get_var, 0, "terminal_mode")
             if ok then
-                if terminal_cursor_line == 1 then
+                if terminal_mode == 1 then
                     vim.api.nvim_buf_set_var(0, "terminal_mode", 0)
                     vim.cmd("startinsert")
                 end
@@ -123,6 +130,10 @@ local function setup()
         group = TalonGroup,
         pattern = "talon",
     })
+
+    if config.settings.cursorless then
+        require("talon.cursorless").setup()
+    end
 end
 
 local M = {
