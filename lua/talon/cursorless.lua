@@ -116,4 +116,19 @@ function M.buffer_get_selection_text()
     return selection
 end
 
+
+-- https://github.com/nvim-treesitter/nvim-treesitter/blob/master/lua/nvim-treesitter/ts_utils.lua#L278
+-- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/blob/master/lua/nvim-treesitter/textobjects/select.lua#L114
+-- as an example if you put that in a vim buffer and do the following you can do a selection:
+-- :w c:\work\tmp\test.lua
+-- :so %
+-- :lua select_range(5, 12, 5, 30)
+-- for example it will highlight the last function name (nvim_win_set_cursor). 
+function M.select_range(start_x, start_y, end_x, end_y)
+  vim.cmd([[normal! :noh]])
+  vim.api.nvim_win_set_cursor(0, { start_x, start_y })
+  vim.cmd([[normal v]])
+  vim.api.nvim_win_set_cursor(0, { end_x, end_y })
+end
+
 return M
