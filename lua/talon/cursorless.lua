@@ -1,5 +1,4 @@
 local M = {}
-local cursorless = require('talon.cursorless')
 
 function M.setup()
   -- these prints are useful when debugging since we need to attach to let neovim run at startup
@@ -103,7 +102,7 @@ end
 -- { "hello", "air" }
 function M.buffer_get_selection_text()
   print('buffer_get_selection_text()')
-  local sline, scol, eline, ecol, _ = unpack(cursorless.buffer_get_selection())
+  local sline, scol, eline, ecol, _ = unpack(require('talon.cursorless').buffer_get_selection())
 
   local lines = vim.api.nvim_buf_get_lines(0, sline - 1, eline, 0)
   if #lines == 0 then

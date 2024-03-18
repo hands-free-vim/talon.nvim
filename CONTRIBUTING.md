@@ -50,7 +50,7 @@ linting errors you may run into, but can't actually fix.
 
 ### luacheck
 
-Sometimes you'll get a warning for something that you isn't valid. A good example of this is getting a warning for a
+Sometimes you'll get a warning for something that isn't valid. A good example of this is getting a warning for a
 line being too long, when the line is a URI that you can't shorten. In this case you can use the [inline command](https://luacheck.readthedocs.io/en/stable/inline.html)
 functionality to disable a check for a specific line.
 
