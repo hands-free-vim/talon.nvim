@@ -26,10 +26,6 @@ repos:
     rev: "v4.0.0-alpha.8"
     hooks:
       - id: prettier
-  - repo: https://github.com/nix-community/nixpkgs-fmt
-    rev: f3fac47d6509e6b23c6103bb833353db348c634f
-    hooks:
-      - id: nixpkgs-fmt
   - repo: https://github.com/rwxcorp/pre-commit-lua.git
     rev: v1.0.0
     hooks:
