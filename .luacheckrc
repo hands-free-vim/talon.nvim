@@ -5,5 +5,4 @@ ignore = { "432" }
 
 globals = {
     "vim",
-    "talon"
 }
