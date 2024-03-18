@@ -4,5 +4,6 @@ codes = true
 ignore = { "432" }
 
 globals = {
-    "vim"
+    "vim",
+    "talon"
 }

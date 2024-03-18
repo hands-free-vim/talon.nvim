@@ -1,4 +1,4 @@
 {
   "Lua.runtime.version": "Lua 5.1",
-  "Lua.diagnostics.globals": ["vim"]
+  "Lua.diagnostics.globals": ["vim", "talon"]
 }
