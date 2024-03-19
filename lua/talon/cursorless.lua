@@ -1,10 +1,36 @@
 local M = {}
 
-function M.setup()
-  -- these prints are useful when debugging since we need to attach to let neovim run at startup
-  print('Setting up cursorless...')
+-- this triggers loading the node process as well as calling one function
+-- in both the cursorless-neovim and command-server extensions in order to initialize them
+local function load_extensions()
   vim.api.nvim_call_function('CursorlessLoadExtension', {})
   vim.api.nvim_call_function('CommandServerLoadExtension', {})
+end
+
+-- Cursorless command-server shortcut: CTRL+q
+-- https://stackoverflow.com/questions/40504408/can-i-map-a-key-binding-to-a-function-in-vimrc
+-- https://stackoverflow.com/questions/7642746/is-there-any-way-to-view-the-currently-mapped-keys-in-vim
+-- luacheck:ignore 631
+-- https://stackoverflow.com/questions/3776117/what-is-the-difference-between-the-remap-noremap-nnoremap-and-vnoremap-mapping
+local function configure_command_server_shortcut()
+  -- from insert mode, go into normal mode before executing the command
+  -- https://stackoverflow.com/questions/4416512/why-use-esc-in-vim
+  -- https://vim.fandom.com/wiki/Use_Ctrl-O_instead_of_Esc_in_insert_mode_mappings
+  vim.cmd([[
+    inoremap <c-q> <c-o>:call CommandServerRunCommand()<CR>
+  ]])
+  vim.cmd([[
+  nnoremap <c-q> :call CommandServerRunCommand()<CR>
+  cnoremap <c-q> :call CommandServerRunCommand()<CR>
+  vnoremap <c-q> :call CommandServerRunCommand()<CR>
+  ]])
+end
+
+function M.setup()
+  -- these prints are useful as it takes a few seconds to load the node process
+  print('Setting up cursorless...')
+  load_extensions()
+  configure_command_server_shortcut()
   print('Setting up cursorless done')
 end
 
