@@ -141,4 +141,21 @@ function M.select_range(start_x, start_y, end_x, end_y)
   vim.api.nvim_win_set_cursor(0, { end_x, end_y })
 end
 
+-- https://vimdoc.sourceforge.net/htmldoc/eval.html#setreg()
+-- https://stackoverflow.com/questions/11489428/how-can-i-make-vim-paste-from-and-copy-to-the-systems-clipboard?page=1&tab=scoredesc#tab-top
+-- https://stackoverflow.com/questions/30691466/what-is-difference-between-vims-clipboard-unnamed-and-unnamedplus-settings
+-- Save the data string into the operating system clipboard
+function M.put_to_clipboard(data)
+  print('put_to_clipboard()')
+  vim.fn.setreg('*', data)
+end
+
+-- https://vimdoc.sourceforge.net/htmldoc/eval.html#getreg()
+-- Return the string from the operating system clipboard
+-- TODO: this hasn't been tested yet. This will be needed for a command like "paste to row one"
+function M.get_from_clipboard()
+  print('get_from_clipboard()')
+  return vim.fn.getreg('*')
+end
+
 return M
