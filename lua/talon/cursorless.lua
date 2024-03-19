@@ -24,6 +24,13 @@ local function configure_command_server_shortcut()
   cnoremap <c-q> :call CommandServerRunCommand()<CR>
   vnoremap <c-q> :call CommandServerRunCommand()<CR>
   ]])
+  -- https://vi.stackexchange.com/questions/4919/exit-from-terminal-mode-in-neovim-vim-8
+  vim.cmd([[
+    tnoremap <c-q> <c-\><c-n>:call CommandServerRunCommand()<CR><CR>
+  ]])
+  -- https://www.reddit.com/r/neovim/comments/pt92qn/mapping_cd_in_terminal_mode/
+  -- TODO: update the above mappings to use the neovim syntax, similar to the below, though not working yet
+  -- vim.nvim_set_keymap('t', '<c-q>', [[<c-\><c-n>:call CommandServerRunCommand()<CR>]], { noremap = true })
 end
 
 function M.setup()
