@@ -1,4 +1,7 @@
 {
   "Lua.runtime.version": "Lua 5.1",
-  "Lua.diagnostics.globals": ["vim", "talon"]
+  "Lua.diagnostics.globals": ["vim", "talon"],
+  "[lua]": {
+    "editor.defaultFormatter": "JohnnyMorganz.stylua"
+  }
 }
