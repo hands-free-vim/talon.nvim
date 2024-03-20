@@ -40,10 +40,19 @@ local function configure_command_server_shortcut()
     '<cmd>lua vim.fn.CommandServerRunCommand()<CR>',
     { noremap = true }
   )
+  -- vim.api.nvim_set_keymap(
+  --   't',
+  --   '<c-q>',
+  --   '<cmd>lua vim.fn.CommandServerRunCommand()<CR>',
+  --   { noremap = true }
+  -- )
+  -- we do change the mode when in terminal mode before running anything though.
+  -- This is to ease doing stuff
+  -- like calling select_range() as otherwise it would fail for now
   vim.api.nvim_set_keymap(
     't',
     '<c-q>',
-    '<cmd>lua vim.fn.CommandServerRunCommand()<CR>',
+    [[<c-\><c-n><cmd>lua vim.fn.CommandServerRunCommand()<CR>]],
     { noremap = true }
   )
   -- from insert mode, go into normal mode before executing the command
@@ -197,9 +206,55 @@ end
 -- :so %
 -- :lua select_range(5, 12, 5, 30)
 -- for example it will highlight the last function name (nvim_win_set_cursor).
+-- another example is :tmap <c-b> <Cmd>lua require("talon.cursorless").select_range(4, 0, 4, 38)<Cr>
+-- TODO: works for any mode (n,i,v,nt) except in t mode
 function M.select_range(start_x, start_y, end_x, end_y)
   vim.cmd([[normal! :noh]])
   vim.api.nvim_win_set_cursor(0, { start_x, start_y })
+  vim.cmd([[normal v]])
+  vim.api.nvim_win_set_cursor(0, { end_x, end_y })
+end
+
+-- https://github.com/nvim-treesitter/nvim-treesitter/blob/master/lua/nvim-treesitter/ts_utils.lua#L278
+-- another example is :map <c-a> <Cmd>lua require("talon.cursorless").select_range2(4, 0, 4, 38)<Cr>
+-- TODO: works for any mode (n,i,v,nt) except in t mode
+function M.select_range2(start_row, start_col, end_row, end_col, selection_mode)
+  local v_table = { charwise = 'v', linewise = 'V', blockwise = '<C-v>' }
+  selection_mode = selection_mode or 'charwise'
+
+  -- Normalise selection_mode
+  if vim.tbl_contains(vim.tbl_keys(v_table), selection_mode) then
+    selection_mode = v_table[selection_mode]
+  end
+
+  -- enter visual mode if normal or operator-pending (no) mode
+  -- Why? According to https://learnvimscriptthehardway.stevelosh.com/chapters/15.html
+  --   If your operator-pending mapping ends with some text visually selected, Vim will operate on that text.
+  --   Otherwise, Vim will operate on the text between the original cursor position and the new position.
+  local mode = vim.api.nvim_get_mode()
+  if mode.mode ~= selection_mode then
+    -- Call to `nvim_replace_termcodes()` is needed for sending appropriate command to enter blockwise mode
+    selection_mode = vim.api.nvim_replace_termcodes(selection_mode, true, true, true)
+    vim.api.nvim_cmd({ cmd = 'normal', bang = true, args = { selection_mode } }, {})
+  end
+
+  vim.api.nvim_win_set_cursor(0, { start_row, start_col })
+  vim.cmd('normal! o')
+  vim.api.nvim_win_set_cursor(0, { end_row, end_col })
+end
+
+-- another example is :map <c-a> <Cmd>lua require("talon.cursorless").select_range3(4, 0, 4, 38)<Cr>
+-- TODO: works for any mode (n,i,v,nt) except in t mode
+function M.select_range3(start_x, start_y, end_x, end_y)
+  print('select_range()')
+  print(('start_x=%d, start_y=%d, end_x=%d, end_y=%d'):format(start_x, start_y, end_x, end_y))
+  local key = vim.api.nvim_replace_termcodes('<c-\\>', true, true, true)
+  vim.api.nvim_feedkeys(key, 't', false)
+  local key2 = vim.api.nvim_replace_termcodes('<c-n>', true, true, true)
+  vim.api.nvim_feedkeys(key2, 't', false)
+  vim.cmd([[normal! :noh]])
+  vim.api.nvim_win_set_cursor(0, { start_x, start_y })
+  -- vim.cmd([[normal v]])
   vim.cmd([[normal v]])
   vim.api.nvim_win_set_cursor(0, { end_x, end_y })
 end
