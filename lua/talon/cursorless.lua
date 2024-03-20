@@ -13,24 +13,54 @@ end
 -- luacheck:ignore 631
 -- https://stackoverflow.com/questions/3776117/what-is-the-difference-between-the-remap-noremap-nnoremap-and-vnoremap-mapping
 local function configure_command_server_shortcut()
+  -- these mappings don't change the current mode
+  -- https://neovim.io/doc/user/api.html#nvim_set_keymap()
+  -- https://www.reddit.com/r/neovim/comments/pt92qn/mapping_cd_in_terminal_mode/
+  vim.api.nvim_set_keymap(
+    'i',
+    '<c-q>',
+    '<cmd>lua vim.fn.CommandServerRunCommand()<CR>',
+    { noremap = true }
+  )
+  vim.api.nvim_set_keymap(
+    'n',
+    '<c-q>',
+    '<cmd>lua vim.fn.CommandServerRunCommand()<CR>',
+    { noremap = true }
+  )
+  vim.api.nvim_set_keymap(
+    'c',
+    '<c-q>',
+    '<cmd>lua vim.fn.CommandServerRunCommand()<CR>',
+    { noremap = true }
+  )
+  vim.api.nvim_set_keymap(
+    'v',
+    '<c-q>',
+    '<cmd>lua vim.fn.CommandServerRunCommand()<CR>',
+    { noremap = true }
+  )
+  vim.api.nvim_set_keymap(
+    't',
+    '<c-q>',
+    '<cmd>lua vim.fn.CommandServerRunCommand()<CR>',
+    { noremap = true }
+  )
   -- from insert mode, go into normal mode before executing the command
   -- https://stackoverflow.com/questions/4416512/why-use-esc-in-vim
   -- https://vim.fandom.com/wiki/Use_Ctrl-O_instead_of_Esc_in_insert_mode_mappings
-  vim.cmd([[
-    inoremap <c-q> <c-o>:call CommandServerRunCommand()<CR>
-  ]])
-  vim.cmd([[
-  nnoremap <c-q> :call CommandServerRunCommand()<CR>
-  cnoremap <c-q> :call CommandServerRunCommand()<CR>
-  vnoremap <c-q> :call CommandServerRunCommand()<CR>
-  ]])
-  -- https://vi.stackexchange.com/questions/4919/exit-from-terminal-mode-in-neovim-vim-8
-  vim.cmd([[
-    tnoremap <c-q> <c-\><c-n>:call CommandServerRunCommand()<CR><CR>
-  ]])
-  -- https://www.reddit.com/r/neovim/comments/pt92qn/mapping_cd_in_terminal_mode/
-  -- TODO: update the above mappings to use the neovim syntax, similar to the below, though not working yet
-  -- vim.nvim_set_keymap('t', '<c-q>', [[<c-\><c-n>:call CommandServerRunCommand()<CR>]], { noremap = true })
+  -- vim.cmd([[
+  --   inoremap <c-q> <c-o>:call CommandServerRunCommand("i")<CR>
+  -- ]])
+  -- vim.cmd([[
+  -- nnoremap <c-q> :call CommandServerRunCommand("n")<CR>
+  -- cnoremap <c-q> :call CommandServerRunCommand("c")<CR>
+  -- vnoremap <c-q> :call CommandServerRunCommand("v")<CR>
+  -- ]])
+  -- -- https://vi.stackexchange.com/questions/4919/exit-from-terminal-mode-in-neovim-vim-8
+  -- vim.cmd([[
+  --   tnoremap <c-q> <c-\><c-n>:call CommandServerRunCommand("t")<CR><CR>
+  -- ]])
 end
 
 function M.setup()
@@ -44,7 +74,7 @@ end
 -- Get the first and last visible line of the current window/buffer
 -- @see https://vi.stackexchange.com/questions/28471/get-first-and-last-visible-line-from-other-buffer-than-current
 -- w0/w$ are indexed from 1, similarly to what is shown in neovim
--- e.g. :lua print(dump_table(window_get_visible_lines()))"
+-- e.g. :lua print(dump_table(require('talon.cursorless').window_get_visible_lines()))"
 --   window_get_visible_lines
 --  { [1] = 28, [2] = 74 }
 function M.window_get_visible_lines()
@@ -55,7 +85,7 @@ end
 -- https://www.reddit.com/r/neovim/comments/p4u4zy/how_to_pass_visual_selection_range_to_lua_function/
 -- https://neovim.io/doc/user/api.html#nvim_win_get_cursor()
 --
--- e.g. run in command mode :vmap <c-a> <Cmd>lua print(vim.inspect(buffer_get_selection()))<Cr>
+-- e.g. run in command mode :vmap <c-a> <Cmd>lua print(vim.inspect(require('talon.cursorless').buffer_get_selection()))<Cr>
 -- then go in visual mode with "v" and select "hello" on the first line and continue selection with "air"
 -- on the second line.
 -- Then hit ctrl+b and it will show the selection
@@ -128,7 +158,7 @@ function M.buffer_get_selection()
 end
 
 -- https://www.reddit.com/r/neovim/comments/p4u4zy/how_to_pass_visual_selection_range_to_lua_function/
--- e.g. run in command mode :vmap <c-b> <Cmd>lua print(vim.inspect(buffer_get_selection_text()))<Cr>
+-- e.g. run in command mode :vmap <c-b> <Cmd>lua print(vim.inspect(require('talon.cursorless').buffer_get_selection_text()))<Cr>
 -- then go in visual mode with "v" and select "hello" on the first line and continue selection with "air"
 -- on the second line.
 -- Then hit ctrl+b and it will show the selection
@@ -178,10 +208,14 @@ end
 -- https://stackoverflow.com/questions/11489428/how-can-i-make-vim-paste-from-and-copy-to-the-systems-clipboard?page=1&tab=scoredesc#tab-top
 -- https://stackoverflow.com/questions/30691466/what-is-difference-between-vims-clipboard-unnamed-and-unnamedplus-settings
 -- Save the data string into the operating system clipboard
-function M.put_to_clipboard(data)
-  print('put_to_clipboard()')
-  vim.fn.setreg('*', data)
-end
+-- eg :lua require('talon.cursorless').put_to_clipboard('hello')
+--    :lua require('talon.cursorless').put_to_clipboard("01 345 789abcdef\r\naaaa bbbb cccc")
+-- TODO: we can't really use that with muti line string that potentially also contain ending square brackets
+-- but we don't really need it because we can call the vim api directly from typescript
+-- function M.put_to_clipboard(data)
+--   print('put_to_clipboard()')
+--   vim.fn.setreg('*', data)
+-- end
 
 -- https://vimdoc.sourceforge.net/htmldoc/eval.html#getreg()
 -- Return the string from the operating system clipboard
