@@ -259,6 +259,18 @@ function M.select_range3(start_x, start_y, end_x, end_y)
   vim.api.nvim_win_set_cursor(0, { end_x, end_y })
 end
 
+-- another example is :map <c-a> <Cmd>lua require("talon.cursorless").select_range4(4, 0, 4, 38)<Cr>
+-- another example is :tmap <c-a> <Cmd>lua require("talon.cursorless").select_range4(4, 0, 4, 38)<Cr>
+-- https://vi.stackexchange.com/questions/11893/exiting-back-to-normal-mode-in-terminal-buffer-from-vimscript
+function M.select_range4(start_x, start_y, end_x, end_y)
+  print('select_range4()')
+  vim.cmd([[normal! <C-\><C-N>]])
+  vim.api.nvim_win_set_cursor(0, { start_x, start_y })
+  -- vim.cmd([[normal v]])
+  vim.cmd([[normal v]])
+  vim.api.nvim_win_set_cursor(0, { end_x, end_y })
+end
+
 -- https://vimdoc.sourceforge.net/htmldoc/eval.html#setreg()
 -- https://stackoverflow.com/questions/11489428/how-can-i-make-vim-paste-from-and-copy-to-the-systems-clipboard?page=1&tab=scoredesc#tab-top
 -- https://stackoverflow.com/questions/30691466/what-is-difference-between-vims-clipboard-unnamed-and-unnamedplus-settings
