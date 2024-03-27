@@ -11,7 +11,6 @@ vim.o.scrollback = -1
 -- FIXME: needs an option
 vim.o.cmdheight = 0
 
--- FIXME: Add a test for if fugitive is installed
 -- FIXME: remove TERM-N probably
 local update_title = function()
   local mode = vim.api.nvim_get_mode().mode
