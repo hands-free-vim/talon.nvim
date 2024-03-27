@@ -73,11 +73,8 @@ local function configure_command_server_shortcut()
 end
 
 function M.setup()
-  -- these prints are useful as it takes a few seconds to load the node process
-  print('Setting up cursorless...')
   load_extensions()
   configure_command_server_shortcut()
-  print('Setting up cursorless done')
 end
 
 -- Get the first and last visible line of the current window/buffer
