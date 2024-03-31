@@ -4,6 +4,8 @@ function M.get_default_config()
   return {
     settings = {
       cursorless = false,
+      debug = true,
+      title_suffix = '',
     },
   }
 end
