@@ -129,7 +129,7 @@ local function setup(user_config)
   })
 
   if config.settings.cursorless then
-    require('talon.cursorless').setup()
+    require('talon.cursorless').setup(config)
   end
 end
 
