@@ -286,25 +286,15 @@ function M.select_range3(start_x, start_y, end_x, end_y)
   vim.api.nvim_win_set_cursor(0, { end_x, end_y })
 end
 
--- https://vimdoc.sourceforge.net/htmldoc/eval.html#setreg()
--- https://stackoverflow.com/questions/11489428/how-can-i-make-vim-paste-from-and-copy-to-the-systems-clipboard?page=1&tab=scoredesc#tab-top
--- https://stackoverflow.com/questions/30691466/what-is-difference-between-vims-clipboard-unnamed-and-unnamedplus-settings
--- Save the data string into the operating system clipboard
--- eg :lua require('talon.cursorless').put_to_clipboard('hello')
---    :lua require('talon.cursorless').put_to_clipboard("01 345 789abcdef\r\naaaa bbbb cccc")
--- TODO: we can't really use that with muti line string that potentially also contain ending square brackets
--- but we don't really need it because we can call the vim api directly from typescript
--- function M.put_to_clipboard(data)
---   print('put_to_clipboard()')
---   vim.fn.setreg('*', data)
--- end
-
--- https://vimdoc.sourceforge.net/htmldoc/eval.html#getreg()
--- Return the string from the operating system clipboard
--- TODO: this hasn't been tested yet. This will be needed for a command like "paste to row one"
-function M.get_from_clipboard()
-  print('get_from_clipboard()')
-  return vim.fn.getreg('*')
+-- another example is :map <c-a> <Cmd>lua require("talon.cursorless").select_range4(4, 0, 4, 38)<Cr>
+-- another example is :tmap <c-a> <Cmd>lua require("talon.cursorless").select_range4(4, 0, 4, 38)<Cr>
+-- https://vi.stackexchange.com/questions/11893/exiting-back-to-normal-mode-in-terminal-buffer-from-vimscript
+function M.select_range4(start_x, start_y, end_x, end_y)
+  print('select_range4()')
+  vim.cmd([[normal! <C-\><C-N>]])
+  vim.api.nvim_win_set_cursor(0, { start_x, start_y })
+  vim.cmd([[normal v]])
+  vim.api.nvim_win_set_cursor(0, { end_x, end_y })
 end
 
 return M
