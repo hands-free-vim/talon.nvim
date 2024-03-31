@@ -72,14 +72,41 @@ local function configure_command_server_shortcut()
   -- ]])
 end
 
-function M.setup()
+function M.setup(config)
   -- these prints are useful as it takes a few seconds to load the node process
-  print('Setting up cursorless...')
+  if config.debug then
+    print('Setting up cursorless...')
+  end
+
+  -- Don't make the user have the manually update the rplugins in order to use the extension
+  -- vim.cmd("silent! UpdateRemotePlugins")
+  -- rplugin = vim.fn.stdpath("data") .. "/rplugin.vim"
+  -- vim.cmd('silent! execute "source ' .. rplugin .. '"')
+
+  -- We don't use rplugin to prevent the extra step, and don't run :UpdateRemotePlugins every time,
+  -- as if the user actually has lots of remote plugins, it can slow down startup. So we just register
+  -- it ourselves here. The downside is we can't automate the process of updating the exposed endpoints
+
+  -- TODO: Add the path of the current lua file and build the path to like "plugins" or something
+  vim.cmd([[
+        call remote#host#RegisterPlugin('node', '/home/aa/dev/talon/talon.nvim/rplugin/node/cursorless', [
+	    \ {'sync': v:false, 'name': 'CursorlessLoadExtension', 'type': 'function', 'opts': {}},
+	    \ ])
+       ]])
+  vim.cmd([[
+        call remote#host#RegisterPlugin('node', '/home/aa/dev/talon/talon.nvim/rplugin/node/command-server', [
+	    \ {'sync': v:false, 'name': 'CommandServerTest', 'type': 'function', 'opts': {}},
+	    \ {'sync': v:false, 'name': 'CommandServerLoadExtension', 'type': 'function', 'opts': {}},
+	    \ {'sync': v:false, 'name': 'CommandServerRunCommand', 'type': 'function', 'opts': {}},
+        \ ])
+       ]])
+
   load_extensions()
   configure_command_server_shortcut()
-  print('Setting up cursorless done')
+  if config.debug then
+    print('Setting up cursorless done')
+  end
 end
-
 -- Get the first and last visible line of the current window/buffer
 -- @see https://vi.stackexchange.com/questions/28471/get-first-and-last-visible-line-from-other-buffer-than-current
 -- w0/w$ are indexed from 1, similarly to what is shown in neovim
