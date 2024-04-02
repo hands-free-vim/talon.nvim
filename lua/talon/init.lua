@@ -138,4 +138,6 @@ local M = {
   setup = setup,
 }
 
+vim.cmd('source ' .. require('talon.utils').talon_nvim_path() .. '/vim/utils.vim')
+
 return M
