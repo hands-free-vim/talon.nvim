@@ -70,4 +70,21 @@ function M.talon_nvim_path()
   return str
 end
 
+-- assumes we are in terminal mode and switch to normal terminal mode
+-- https://www.reddit.com/r/neovim/comments/uk3xmq/change_mode_in_lua/
+-- https://neovim.io/doc/user/api.html#nvim_feedkeys()
+-- https://neovim.io/doc/user/builtin.html#feedkeys()
+-- https://neovim.io/doc/user/api.html#nvim_replace_termcodes()
+-- e.g. run in command mode :tmap <c-a> <Cmd>lua mode_switch_nt()<Cr>
+function M.mode_switch_nt()
+  local key = vim.api.nvim_replace_termcodes('<c-\\><c-n>', true, false, true)
+  vim.api.nvim_feedkeys(key, 'n', false)
+end
+
+-- assumes we are in normal terminal mode and switch to terminal mode
+-- e.g. run in command mode :nmap <c-b> <Cmd>lua mode_switch_t()<Cr>
+function M.mode_switch_t()
+  vim.api.nvim_feedkeys('i', 'n', true)
+end
+
 return M
