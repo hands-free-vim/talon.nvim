@@ -84,7 +84,7 @@ end
 --   window_get_visible_lines
 --  { [1] = 28, [2] = 74 }
 function M.window_get_visible_lines()
-  print('window_get_visible_lines()')
+  -- print('window_get_visible_lines()')
   return { vim.fn.line('w0'), vim.fn.line('w$') }
 end
 
@@ -109,14 +109,14 @@ end
 -- e.g. run in command mode :vmap <c-a> <Cmd>:call CursorlessLoadExtension()<Cr>
 -- and again use ctrl+a after selecting the text
 function M.buffer_get_selection()
-  print('buffer_get_selection()')
+  -- print('buffer_get_selection()')
   local modeInfo = vim.api.nvim_get_mode()
   local mode = modeInfo.mode
 
   local cursor = vim.api.nvim_win_get_cursor(0)
   local cline, ccol = cursor[1], cursor[2]
   local vline, vcol = vim.fn.line('v'), vim.fn.col('v')
-  print(('cline=%d, ccol=%d, vline=%d, vcol=%d'):format(cline, ccol, vcol, vcol))
+  -- print(('cline=%d, ccol=%d, vline=%d, vcol=%d'):format(cline, ccol, vcol, vcol))
 
   local sline, scol
   local eline, ecol
@@ -151,15 +151,15 @@ function M.buffer_get_selection()
     ecol = nil
   end
 
-  print(
-    ('sline=%d, scol=%d, eline=%d, ecol=%d, reverse=%s'):format(
-      sline,
-      scol,
-      eline,
-      ecol,
-      tostring(reverse)
-    )
-  )
+  -- print(
+  --   ('sline=%d, scol=%d, eline=%d, ecol=%d, reverse=%s'):format(
+  --     sline,
+  --     scol,
+  --     eline,
+  --     ecol,
+  --     tostring(reverse)
+  --   )
+  -- )
   return { sline, scol, eline, ecol, reverse }
 end
 
@@ -170,7 +170,7 @@ end
 -- Then hit ctrl+b and it will show the selection
 -- { "hello", "air" }
 function M.buffer_get_selection_text()
-  print('buffer_get_selection_text()')
+  -- print('buffer_get_selection_text()')
   local sline, scol, eline, ecol, _ = unpack(require('talon.cursorless').buffer_get_selection())
 
   local lines = vim.api.nvim_buf_get_lines(0, sline - 1, eline, 0)
@@ -243,8 +243,8 @@ end
 -- another example is :map <c-a> <Cmd>lua require("talon.cursorless").select_range3(4, 0, 4, 38)<Cr>
 -- TODO: works for any mode (n,i,v,nt) except in t mode
 function M.select_range3(start_x, start_y, end_x, end_y)
-  print('select_range()')
-  print(('start_x=%d, start_y=%d, end_x=%d, end_y=%d'):format(start_x, start_y, end_x, end_y))
+  -- print('select_range()')
+  -- print(('start_x=%d, start_y=%d, end_x=%d, end_y=%d'):format(start_x, start_y, end_x, end_y))
   local key = vim.api.nvim_replace_termcodes('<c-\\>', true, true, true)
   vim.api.nvim_feedkeys(key, 't', false)
   local key2 = vim.api.nvim_replace_termcodes('<c-n>', true, true, true)
@@ -260,7 +260,7 @@ end
 -- another example is :tmap <c-a> <Cmd>lua require("talon.cursorless").select_range4(4, 0, 4, 38)<Cr>
 -- https://vi.stackexchange.com/questions/11893/exiting-back-to-normal-mode-in-terminal-buffer-from-vimscript
 function M.select_range4(start_x, start_y, end_x, end_y)
-  print('select_range4()')
+  -- print('select_range4()')
   vim.cmd([[normal! <C-\><C-N>]])
   vim.api.nvim_win_set_cursor(0, { start_x, start_y })
   vim.cmd([[normal v]])
