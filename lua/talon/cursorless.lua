@@ -5,14 +5,21 @@ local M = {}
 local function load_extensions()
   vim.api.nvim_call_function('CursorlessLoadExtension', {})
   vim.api.nvim_call_function('CommandServerLoadExtension', {})
-  -- TODO: call run() from test-harness/src/index.ts instead of CursorlessRunRecordedTestCases
+
+  -- current method
+  if os.getenv('CURSORLESS_MODE') == 'test' then
+    -- make sure cursorless is loaded before starting the tests
+    -- see https://neovim.io/doc/user/various.html#%3Asleep
+    vim.cmd([[sleep 5]])
+    vim.api.nvim_call_function('CursorlessRunRecordedTestCases', {})
+  end
+
+  -- future method
   -- if os.getenv('CURSORLESS_MODE') == 'test' then
   --   -- make sure cursorless is loaded before starting the tests
   --   -- see https://neovim.io/doc/user/various.html#%3Asleep
   --   vim.cmd([[sleep 5]])
-  --   -- TODO: atm this is not working because of the error: "Tried to access cursorlessApi before it was injected"
-  --   -- it seems it starts loads a different .js file?
-  --   vim.api.nvim_call_function('CursorlessRunRecordedTestCases', {})
+  --   vim.api.nvim_call_function('TestHarnessRun', {})
   -- end
 end
 
