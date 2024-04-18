@@ -1,10 +1,12 @@
 local M = {}
 
 -- this triggers loading the node process as well as calling one function
--- in both the cursorless-neovim and command-server extensions in order to initialize them
+-- in the cursorless-neovim, command-server and neovim-registry extensions
+-- in order to initialize them
 local function load_extensions()
   vim.api.nvim_call_function('CursorlessLoadExtension', {})
   vim.api.nvim_call_function('CommandServerLoadExtension', {})
+  vim.api.nvim_call_function('RegistryLoadExtension', {})
 
   -- current method
   if os.getenv('CURSORLESS_MODE') == 'test' then
