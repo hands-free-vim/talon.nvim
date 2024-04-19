@@ -1,4 +1,6 @@
 # talon.nvim
+
+Neovim plugin to support Talon Voice and Cursorless
    
 ## Installation
 
@@ -6,11 +8,7 @@ TBD
 
 ## Getting Started
 
-### talon.setup() IS REQUIRED
-
-It is a requirement to call `talon.setup()`. This is required due to autocmds setup.
-
-### Basic Setup
+### Basic Setup (without cursorless)
 
 If you aren't using a plugin manager that automatically calls setup for you, you will need this somewhere in your neovim config:
 
@@ -18,20 +16,14 @@ If you aren't using a plugin manager that automatically calls setup for you, you
 require("talon").setup({})
 ```
 
-### Config
+NOTE: It is a requirement to call `talon.setup()` due to autocmds setup.
 
-There is some optional behavior you can configure by passing a configuration to `talon.setup()`.
+### Cursorless Setup
 
-For example:
+If you want to enable cursorless, you need to use the following instead:
 
 ```lua
 require("talon").setup( {
     settings = { cursorless = true },
 })
 ```
-
-In the example above, the output from the Fugitive plugin function will be appended to the window title on each update.
-
-A completion list of currently supported options is:
-
-TBD
