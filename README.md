@@ -10,7 +10,7 @@ Ideally, you want to use a neovim plugin manager like [lazy.nvim](https://github
 
 ### Lazy installation
 
-After the typical [lazy setup](https://github.com/folke/lazy.nvim?tab=readme-ov-file#-installation), you'll have to add the `talon.nvim` plugin. We also recommende the following other plugins for better experience.
+After the typical [lazy setup](https://github.com/folke/lazy.nvim?tab=readme-ov-file#-installation), you'll have to add the `talon.nvim` plugin. We also recommend the following other plugins for the best experience.
 
 ```
 require('lazy').setup({
@@ -18,6 +18,8 @@ require('lazy').setup({
   'tpope/vim-fugitive', 
   
   { 'hands-free-vim/talon.nvim', branch = "dev" },
+
+  -- dependencies useful for neovim-talon
   'dhruvasagar/vim-zoom',
   'gcmt/taboo.vim',
   'vim-scripts/BufOnly.vim'
