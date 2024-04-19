@@ -1,59 +1,59 @@
-<div align="center">
-
 # talon.nvim
 
-##### Control neovim using Talon Voice and Cursorless
+Neovim plugin to support Talon Voice and Cursorless
+   
+## Installation
 
-</div>
+NOTE: Atm you need to use the `dev` branch of this repository.
 
-## ⇁ TOC
+Ideally, you want to use a neovim plugin manager like [lazy.nvim](https://github.com/folke/lazy.nvim).
 
-## ⇁ The Problems
+### Lazy installation
 
-1. Maintaining your own talon-specific neovim settings is tedious
-2. Using a normal terminal from Talon is not great UX; it's not easy to access history, etc
-3. Editing with neovim by dictating characters is tedious (in our opinion)
-4. No cursorless in neovim
+After the typical [lazy setup](https://github.com/folke/lazy.nvim?tab=readme-ov-file#-installation), you'll have to add the `talon.nvim` plugin. We also recommend the following other plugins for the best experience.
 
-## ⇁ The Solutions
+```
+require('lazy').setup({
+  -- Git related plugins
+  'tpope/vim-fugitive', 
+  
+  { 'hands-free-vim/talon.nvim', branch = "dev" },
 
-1. All settings related to Talon and neovim terminal use in one plugin
-2. Use neovim as your terminal! Easy shell history buffer access
-3. Support automatic title updates to allow [talon-vim](https://github.com/hands-free-vim/talon-vim) use
-4. Introduce cursorless into neovim ([eventually](https://github.com/cursorless-dev/cursorless/pull/2256))
+  -- dependencies useful for neovim-talon
+  'dhruvasagar/vim-zoom',
+  'gcmt/taboo.vim',
+  'vim-scripts/BufOnly.vim'
+})
+```
 
-## ⇁ Installation
+### Manual installation
 
-TBD
+This method is not recommended but you can try directly cloning the plugin into your nvim data folder:
 
-## ⇁ Getting Started
+```
+git clone  https://github.com/hands-free-vim/talon.nvim
+cd talon.nvim
+git checkout dev
+```
 
-### talon.setup() IS REQUIRED
+## Configuration
 
-It is a requirement to call `talon.setup()`. This is required due to autocmds setup.
+### Basic Setup (without cursorless)
 
-### Basic Setup
-
-If you aren't using a plugin manager that automatically calls setup for you, you will need this somewhere in your neovim config:
+If you aren't using a plugin manager that automatically calls setup for you (e.g. it is needed for lazy), you will need this somewhere in your neovim config:
 
 ```lua
 require("talon").setup({})
 ```
 
-### Config
+NOTE: It is a requirement to call `talon.setup()` due to autocmds setup.
 
-There is some optional behavior you can configure by passing a configuration to `talon.setup()`.
+### Cursorless Setup
 
-For example:
+If you want to enable cursorless, you need to use the following instead:
 
 ```lua
 require("talon").setup( {
     settings = { cursorless = true },
 })
 ```
-
-In the example above, the output from the Fugitive plugin function will be appended to the window title on each update.
-
-A completion list of currentl supported options is:
-
-TBD
