@@ -1,3 +1,18 @@
+<!-- vim-markdown-toc GFM -->
+
+- [talon.nvim](#talonnvim)
+  - [Prerequisites](#prerequisites)
+    - [Cursorless prerequisites](#cursorless-prerequisites)
+  - [Installation](#installation)
+    - [Lazy installation](#lazy-installation)
+    - [Manual installation](#manual-installation)
+  - [Configuration](#configuration)
+    - [Basic Setup](#basic-setup)
+    - [Cursorless Setup](#cursorless-setup)
+      - [Prerequisites for Cursorless](#prerequisites-for-cursorless)
+
+<!-- vim-markdown-toc -->
+
 # talon.nvim
 
 Neovim plugin to support Talon Voice and Cursorless
@@ -6,7 +21,7 @@ Neovim plugin to support Talon Voice and Cursorless
 
 - neovim: https://neovim.io/
 
-### Prerequisites for Cursorless
+### Cursorless prerequisites
 
 If you want to use Cursorless, you'll need the additional prerequisites:
 
@@ -26,8 +41,8 @@ After the typical [lazy setup](https://github.com/folke/lazy.nvim?tab=readme-ov-
 ```
 require('lazy').setup({
   -- Git related plugins
-  'tpope/vim-fugitive', 
-  
+  'tpope/vim-fugitive',
+
   { 'hands-free-vim/talon.nvim', branch = "beta" },
 
   -- dependencies useful for neovim-talon
@@ -49,7 +64,9 @@ git checkout beta
 
 ## Configuration
 
-### Basic Setup (without cursorless)
+### Basic Setup
+
+If you want to use Cursorless, skip to the following section.
 
 If you aren't using a plugin manager that automatically calls setup for you (e.g. it is needed for lazy), you will need this somewhere in your neovim config:
 
@@ -75,17 +92,18 @@ Before the Cursorless-related extensions from the `node` folder can run, you nee
 
 ```
 cd path/to/talon.nvim
+
 cd command-server
 npm install
 cd ..
+
 cd cursorless-neovim
 npm install
 cd ..
+
 cd neovim-registry
 npm install
 cd ..
 ```
 
 Now you should be able to start neovim and use cursorless.
-
-
