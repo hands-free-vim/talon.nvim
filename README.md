@@ -4,7 +4,7 @@ Neovim plugin to support Talon Voice and Cursorless
    
 ## Installation
 
-NOTE: Atm you need to use the `dev` branch of this repository.
+NOTE: Atm you need to use the `beta` branch of this repository.
 
 Ideally, you want to use a neovim plugin manager like [lazy.nvim](https://github.com/folke/lazy.nvim).
 
@@ -17,7 +17,7 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive', 
   
-  { 'hands-free-vim/talon.nvim', branch = "dev" },
+  { 'hands-free-vim/talon.nvim', branch = "beta" },
 
   -- dependencies useful for neovim-talon
   'dhruvasagar/vim-zoom',
@@ -33,7 +33,7 @@ This method is not recommended but you can try directly cloning the plugin into 
 ```
 git clone  https://github.com/hands-free-vim/talon.nvim
 cd talon.nvim
-git checkout dev
+git checkout beta
 ```
 
 ## Configuration
