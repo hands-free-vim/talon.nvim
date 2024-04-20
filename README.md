@@ -110,6 +110,6 @@ Now you should be able to start neovim and use cursorless.
 
 #### Configuration Notes
 
-Notes for Linux installs:
+Notes for Linux installation:
 - Some Linux package managers ship with a version of nvim too old for Lazy. If this is the case, [install nvim](https://github.com/neovim/neovim/blob/master/INSTALL.md) via another method
-- Do not use the snap package of nvim, as this will interfere with rpc functionality 
+- Do not use the snap package of nvim
