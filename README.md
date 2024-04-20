@@ -36,7 +36,7 @@ Ideally, you want to use a neovim plugin manager like [lazy.nvim](https://github
 
 ### Lazy installation
 
-After the typical [lazy setup](https://github.com/folke/lazy.nvim?tab=readme-ov-file#-installation), you'll have to add the `talon.nvim` plugin. We also recommend the following other plugins for the best experience.
+After the typical [lazy setup](https://github.com/folke/lazy.nvim?tab=readme-ov-file#-installation), you'll have to add the `talon.nvim` plugin to your `init.lua`. We also recommend the following other plugins for the best experience.
 
 ```lua
 require('lazy').setup({
