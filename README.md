@@ -1,7 +1,18 @@
 # talon.nvim
 
 Neovim plugin to support Talon Voice and Cursorless
-   
+
+## Prerequisites
+
+- neovim: https://neovim.io/
+
+### Prerequisites for Cursorless
+
+If you want to use Cursorless, you'll need the additional prerequisites:
+
+- node: https://nodejs.org/en
+- npm (generally part of node installation)
+
 ## Installation
 
 NOTE: Atm you need to use the `beta` branch of this repository.
@@ -57,3 +68,24 @@ require("talon").setup( {
     settings = { cursorless = true },
 })
 ```
+
+#### Prerequisites for Cursorless
+
+Before the Cursorless-related extensions from the `node` folder can run, you need to install their prerequisites:
+
+```
+cd path/to/talon.nvim
+cd command-server
+npm install
+cd ..
+cd cursorless-neovim
+npm install
+cd ..
+cd neovim-registry
+npm install
+cd ..
+```
+
+Now you should be able to start neovim and use cursorless.
+
+
