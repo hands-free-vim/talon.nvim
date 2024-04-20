@@ -118,4 +118,4 @@ Now you should be able to start neovim and use Cursorless.
 
 Notes for Linux installation:
 - Some Linux package managers ship with a version of nvim too old for Lazy. If this is the case, [install nvim](https://github.com/neovim/neovim/blob/master/INSTALL.md) via another method
-- Do not use the snap package of nvim
+- Avoid using the snap package of either npm or nvim, as they might prevent accessing the globally installed neovim npm package
