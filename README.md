@@ -88,7 +88,13 @@ require("talon").setup( {
 
 #### Prerequisites for Cursorless
 
-Before the Cursorless-related extensions from the `node` folder can run, you need to install their prerequisites:
+1. Install the neovim node package globally
+
+```
+npm install -g neovim
+```
+
+2. Install the the Cursorless-related prerequisites from the `node` folder in `talon.nvim`
 
 ```
 cd path/to/talon.nvim/node
@@ -106,7 +112,7 @@ npm install
 cd ..
 ```
 
-Now you should be able to start neovim and use cursorless.
+Now you should be able to start neovim and use Cursorless.
 
 #### Configuration Notes
 
