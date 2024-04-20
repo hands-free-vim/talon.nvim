@@ -38,7 +38,7 @@ Ideally, you want to use a neovim plugin manager like [lazy.nvim](https://github
 
 After the typical [lazy setup](https://github.com/folke/lazy.nvim?tab=readme-ov-file#-installation), you'll have to add the `talon.nvim` plugin. We also recommend the following other plugins for the best experience.
 
-```
+```lua
 require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
@@ -91,7 +91,7 @@ require("talon").setup( {
 Before the Cursorless-related extensions from the `node` folder can run, you need to install their prerequisites:
 
 ```
-cd path/to/talon.nvim
+cd path/to/talon.nvim/node
 
 cd command-server
 npm install
