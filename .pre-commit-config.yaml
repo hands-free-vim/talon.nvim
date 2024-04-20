@@ -1,5 +1,6 @@
 # NOTE: We ignore .js and .cjs files as they are related to cursorless node extensions
 # generated outside of that repo and are "binary" files.
+# TODO: use exclude at top level, see https://pre-commit.com/#top_level-exclude
 minimum_pre_commit_version: "3.2.0"
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
