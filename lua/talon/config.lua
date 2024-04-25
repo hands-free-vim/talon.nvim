@@ -2,9 +2,7 @@ local M = {}
 
 function M.get_default_config()
   return {
-    settings = {
-      cursorless = false,
-    },
+    settings = {},
   }
 end
 
