@@ -2,14 +2,12 @@
 
 - [talon.nvim](#talonnvim)
   - [Prerequisites](#prerequisites)
-    - [Cursorless prerequisites](#cursorless-prerequisites)
   - [Installation](#installation)
     - [Lazy installation](#lazy-installation)
     - [Manual installation](#manual-installation)
   - [Configuration](#configuration)
-    - [Basic Setup](#basic-setup)
-    - [Cursorless Setup](#cursorless-setup)
-      - [Prerequisites for Cursorless](#prerequisites-for-cursorless)
+  - [Frequently asked questions](#frequently-asked-questions)
+    - [nvim does not support Lazy?](#nvim-does-not-support-lazy)
 
 <!-- vim-markdown-toc -->
 
