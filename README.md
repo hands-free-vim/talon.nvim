@@ -2,31 +2,24 @@
 
 - [talon.nvim](#talonnvim)
   - [Prerequisites](#prerequisites)
-    - [Cursorless prerequisites](#cursorless-prerequisites)
   - [Installation](#installation)
     - [Lazy installation](#lazy-installation)
     - [Manual installation](#manual-installation)
   - [Configuration](#configuration)
-    - [Basic Setup](#basic-setup)
-    - [Cursorless Setup](#cursorless-setup)
-      - [Prerequisites for Cursorless](#prerequisites-for-cursorless)
+  - [Frequently asked questions](#frequently-asked-questions)
+    - [nvim does not support Lazy?](#nvim-does-not-support-lazy)
 
 <!-- vim-markdown-toc -->
 
 # talon.nvim
 
-Neovim plugin to support Talon Voice and Cursorless
+Neovim plugin to support Talon Voice
 
 ## Prerequisites
 
 - neovim: https://neovim.io/
-
-### Cursorless prerequisites
-
-If you want to use Cursorless, you'll need the additional prerequisites:
-
-- node: https://nodejs.org/en
-- npm (generally part of node installation)
+- Talon voice: https://talonvoice.com/
+- neovim-talon: https://github.com/hands-free-vim/neovim-talon
 
 ## Installation
 
@@ -36,9 +29,9 @@ Ideally, you want to use a neovim plugin manager like [lazy.nvim](https://github
 
 ### Lazy installation
 
-After the typical [lazy setup](https://github.com/folke/lazy.nvim?tab=readme-ov-file#-installation), you'll have to add the `talon.nvim` plugin. We also recommend the following other plugins for the best experience.
+After the typical [lazy setup](https://github.com/folke/lazy.nvim?tab=readme-ov-file#-installation), you'll have to add the `talon.nvim` plugin to your `init.lua`. We also recommend the following other plugins for the best experience.
 
-```
+```lua
 require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
@@ -64,46 +57,14 @@ git checkout beta
 
 ## Configuration
 
-### Basic Setup
-
-If you want to use Cursorless, skip to the following section.
-
-If you aren't using a plugin manager that automatically calls setup for you (e.g. it is needed for lazy), you will need this somewhere in your neovim config:
+If you aren't using a plugin manager that automatically calls setup for you (e.g. it is needed for lazy), you will need this somewhere in your neovim config, e.g. in [init.lua](https://neovim.io/doc/user/lua-guide.html#lua-guide-config):
 
 ```lua
-require("talon").setup({})
+require("talon").setup()
 ```
 
-NOTE: It is a requirement to call `talon.setup()` due to autocmds setup.
+## Frequently asked questions
 
-### Cursorless Setup
+### nvim does not support Lazy?
 
-If you want to enable cursorless, you need to use the following instead:
-
-```lua
-require("talon").setup( {
-    settings = { cursorless = true },
-})
-```
-
-#### Prerequisites for Cursorless
-
-Before the Cursorless-related extensions from the `node` folder can run, you need to install their prerequisites:
-
-```
-cd path/to/talon.nvim
-
-cd command-server
-npm install
-cd ..
-
-cd cursorless-neovim
-npm install
-cd ..
-
-cd neovim-registry
-npm install
-cd ..
-```
-
-Now you should be able to start neovim and use cursorless.
+Some Linux package managers ship with a version of `nvim` too old for Lazy. If this is the case, [install nvim](https://github.com/neovim/neovim/blob/master/INSTALL.md) via another method.
