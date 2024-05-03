@@ -50,7 +50,7 @@ require('lazy').setup({
 This method is not recommended but you can try directly cloning the plugin into your nvim data folder:
 
 ```
-git clone  https://github.com/hands-free-vim/talon.nvim
+git clone https://github.com/hands-free-vim/talon.nvim
 cd talon.nvim
 git checkout beta
 ```

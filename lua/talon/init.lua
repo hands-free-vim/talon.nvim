@@ -1,5 +1,3 @@
-local Config = require('talon.config')
-
 local TalonGroup = vim.api.nvim_create_augroup('Talon', { clear = true })
 
 -- Accomodate the long titlestring values
@@ -31,8 +29,8 @@ local update_title = function()
   vim.cmd('redraw')
 end
 
-local function setup(user_config)
-  local config = Config.merge_config(user_config)
+local function setup() -- setup(user_config)
+  -- local config = Config.merge_config(user_config)
 
   -- Call once to get the title updated ASAP for talon recognition
   update_title()
@@ -128,14 +126,12 @@ local function setup(user_config)
     group = TalonGroup,
     pattern = 'talon',
   })
-
-  if config.settings.cursorless then
-    require('talon.cursorless').setup()
-  end
 end
 
 local M = {
   setup = setup,
 }
+
+vim.cmd('source ' .. require('talon.utils').talon_nvim_path() .. '/vim/utils.vim')
 
 return M
