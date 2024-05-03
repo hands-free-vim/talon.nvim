@@ -23,8 +23,6 @@ Neovim plugin to support Talon Voice
 
 ## Installation
 
-NOTE: Atm you need to use the `beta` branch of this repository.
-
 Ideally, you want to use a neovim plugin manager like [lazy.nvim](https://github.com/folke/lazy.nvim).
 
 ### Lazy installation
@@ -36,7 +34,7 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
 
-  { 'hands-free-vim/talon.nvim', branch = "beta" },
+  'hands-free-vim/talon.nvim',
 
   -- dependencies useful for neovim-talon
   'dhruvasagar/vim-zoom',
@@ -52,7 +50,6 @@ This method is not recommended but you can try directly cloning the plugin into 
 ```
 git clone https://github.com/hands-free-vim/talon.nvim
 cd talon.nvim
-git checkout beta
 ```
 
 ## Configuration
