@@ -31,15 +31,11 @@ After the typical [lazy setup](https://github.com/folke/lazy.nvim?tab=readme-ov-
 
 ```lua
 require('lazy').setup({
-  -- Git related plugins
-  'tpope/vim-fugitive',
-
   'hands-free-vim/talon.nvim',
 
   -- dependencies useful for neovim-talon
   'dhruvasagar/vim-zoom',
   'gcmt/taboo.vim',
-  'vim-scripts/BufOnly.vim'
 })
 ```
 
@@ -49,7 +45,6 @@ This method is not recommended but you can try directly cloning the plugin into 
 
 ```
 git clone https://github.com/hands-free-vim/talon.nvim
-cd talon.nvim
 ```
 
 ## Configuration
