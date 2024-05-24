@@ -1,0 +1,8 @@
+-- highlight the specified coordinates
+--
+-- local function select_range(start_x, start_y, end_x, end_y)
+--  vim.cmd([[normal! :noh]])
+--  vim.api.nvim_win_set_cursor(0, { start_x, start_y })
+--  vim.cmd([[normal v]])
+-- vim.api.nvim_win_set_cursor(0, { end_x, end_y })
+-- end

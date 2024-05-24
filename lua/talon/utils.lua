@@ -33,8 +33,8 @@ function M.dump_table(o, depth, max_depth)
   return dump(o, depth, max_depth)
 end
 
--- :lua print(require('talon.utils').is_win())
-function M.is_win()
+-- :lua print(require('talon.utils').is_windows())
+function M.is_windows()
   return package.config:sub(1, 1) == '\\'
 end
 
@@ -59,7 +59,7 @@ function M.talon_nvim_path()
   -- skip as the file name is prefixed by "@"
   str = str:sub(2)
   -- print(('source_file2=%s'):format(str))
-  if require('talon.utils').is_win() then
+  if require('talon.utils').is_windows() then
     str = str:gsub('/', '\\')
     -- print('is_win')
   end

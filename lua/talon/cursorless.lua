@@ -3,8 +3,10 @@ local M = {}
 -- this triggers loading the node process as well as calling one function
 -- in both the cursorless-neovim and command-server extensions in order to initialize them
 local function load_extensions()
+  -- vim.call("CursorlessLoadExtension", {})
   vim.api.nvim_call_function('CursorlessLoadExtension', {})
   vim.api.nvim_call_function('CommandServerLoadExtension', {})
+  --vim.call("CommandServerLoadExtension", {})
 end
 
 -- Cursorless command-server shortcut: CTRL+q
@@ -78,28 +80,52 @@ function M.setup(config)
     print('Setting up cursorless...')
   end
 
-  -- Don't make the user have the manually update the rplugins in order to use the extension
-  -- vim.cmd("silent! UpdateRemotePlugins")
-  -- rplugin = vim.fn.stdpath("data") .. "/rplugin.vim"
-  -- vim.cmd('silent! execute "source ' .. rplugin .. '"')
+  -- Don't make the user have to manually update the rplugins in order to use the extension
+  vim.cmd('silent! UpdateRemotePlugins')
+  local rplugin = vim.fn.stdpath('data') .. '/rplugin.vim'
+  vim.cmd('silent! execute "source ' .. rplugin .. '"')
 
   -- We don't use rplugin to prevent the extra step, and don't run :UpdateRemotePlugins every time,
   -- as if the user actually has lots of remote plugins, it can slow down startup. So we just register
   -- it ourselves here. The downside is we can't automate the process of updating the exposed endpoints
 
-  -- TODO: Add the path of the current lua file and build the path to like "plugins" or something
-  vim.cmd([[
-        call remote#host#RegisterPlugin('node', '/home/aa/dev/talon/talon.nvim/rplugin/node/cursorless', [
-	    \ {'sync': v:false, 'name': 'CursorlessLoadExtension', 'type': 'function', 'opts': {}},
-	    \ ])
-       ]])
-  vim.cmd([[
-        call remote#host#RegisterPlugin('node', '/home/aa/dev/talon/talon.nvim/rplugin/node/command-server', [
-	    \ {'sync': v:false, 'name': 'CommandServerTest', 'type': 'function', 'opts': {}},
-	    \ {'sync': v:false, 'name': 'CommandServerLoadExtension', 'type': 'function', 'opts': {}},
-	    \ {'sync': v:false, 'name': 'CommandServerRunCommand', 'type': 'function', 'opts': {}},
-        \ ])
-       ]])
+  -- print("plugins_path:" .. plugins_path)
+  -- Sometimes this throws a host already running error, so we need to catch it
+  --if vim.call("remote#host#IsRunning", "node") == 0 then
+  -- print("remote#host#IsRunning(node) == 0")
+  --vim.call("remote#host#Require", "node")
+
+  --vim.call("remote#host#Require", "node")
+  -- Using the lua version leads to an error:
+  -- Vim(if):E715: Dictionary required
+  -- which is it expecting a VIM dictionary rather than a lua table
+
+  -- vim.call("remote#host#RegisterPlugin", "node", plugins_path .. "cursorless/", {
+  -- 	{ type = "function", name = "CursorlessLoadExtension", sync = false, opts = {} },
+  -- })
+  -- vim.call("remote#host#RegisterPlugin", "node", plugins_path .. "command-server/",
+  -- 	{ type = "function", name = "CommandServerTest", sync = false, opts = {} },
+  -- 	{ type = "function", name = "CommandServerLoadExtension", sync = false, opts = {} },
+  -- 	{ type = "function", name = "CommandServerRunCommand", sync = false, opts = {} },
+  -- })
+  --end
+
+  -- vim.g.talon_nvim_plugins_path = require("talon.utils").talon_nvim_path() .. "plugins/"
+  -- print("pre-registered")
+  -- vim.cmd([[
+  --      ; call remote#host#Require('node')
+
+  --   call remote#host#RegisterPlugin('node', g:talon_nvim_plugins_path .. "cursorless/", [
+  -- \ {'sync': v:false, 'name': 'CursorlessLoadExtension', 'type': 'function', 'opts': {}},
+  -- \ ])
+
+  --   call remote#host#RegisterPlugin('node', g:talon_nvim_plugins_path .. "command-server/", [
+  -- \ {'sync': v:false, 'name': 'CommandServerTest', 'type': 'function', 'opts': {}},
+  -- \ {'sync': v:false, 'name': 'CommandServerLoadExtension', 'type': 'function', 'opts': {}},
+  -- \ {'sync': v:false, 'name': 'CommandServerRunCommand', 'type': 'function', 'opts': {}},
+  --   \ ])
+  --  ]])
+  -- print("post-registered")
 
   load_extensions()
   configure_command_server_shortcut()
