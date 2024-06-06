@@ -23,9 +23,11 @@ Neovim plugin to support Talon Voice
 
 ## Installation
 
+### 1. Install the talon.nvim plugin
+
 Ideally, you want to use a neovim plugin manager like [lazy.nvim](https://github.com/folke/lazy.nvim).
 
-### Lazy installation
+#### Option A: Lazy installation
 
 After the typical [lazy setup](https://github.com/folke/lazy.nvim?tab=readme-ov-file#-installation), you'll have to add the `talon.nvim` plugin to your `init.lua`. We also recommend the following other plugins for the best experience.
 
@@ -39,7 +41,7 @@ require('lazy').setup({
 })
 ```
 
-### Manual installation
+#### Option B: Manual installation
 
 This method is not recommended but you can try directly cloning the plugin into your nvim data folder:
 
@@ -47,7 +49,7 @@ This method is not recommended but you can try directly cloning the plugin into 
 git clone https://github.com/hands-free-vim/talon.nvim
 ```
 
-## Configuration
+### 2. Tell neovim to run the plugin
 
 If you aren't using a plugin manager that automatically calls setup for you (e.g. it is needed for lazy), you will need this somewhere in your neovim config, e.g. in [init.lua](https://neovim.io/doc/user/lua-guide.html#lua-guide-config):
 
