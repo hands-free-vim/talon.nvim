@@ -9,7 +9,6 @@ vim.o.scrollback = -1
 -- FIXME: needs an option
 vim.o.cmdheight = 0
 
--- FIXME: Add a test for if fugitive is installed
 -- FIXME: remove TERM-N probably
 local update_title = function()
   local mode = vim.api.nvim_get_mode().mode
@@ -61,8 +60,17 @@ local function setup() -- setup(user_config)
     pattern = '*',
   })
 
+  -- Enter terminal mode when opening a new terminal buffer
+  vim.api.nvim_create_autocmd('TermOpen', {
+    callback = function()
+      vim.cmd('startinsert')
+    end,
+    group = TalonGroup,
+    pattern = 'term://*',
+  })
+
   -- These next few allow us to switch back to terminal mode after leaving and reentering a terminal buffer, but only
-  -- if the original terminal buffer was in terminal mode at the time we left. It's mostly useful of your using
+  -- if the original terminal buffer was in terminal mode at the time we left. It's mostly useful if your using
   -- splits and regularly switching out of a terminal
   vim.api.nvim_create_autocmd('TermLeave', {
     pattern = 'term://*',
