@@ -28,4 +28,54 @@ function M.talon_nvim_path()
   return str
 end
 
+local function move_split_to_tab(direction)
+  if direction ~= 'next' and direction ~= 'previous' then
+    -- FIXME: Warn user that the direction is invalid
+    return
+  end
+  -- Make sure there is more than one window
+  local last_tab_num = vim.fn.tabpagenr('$')
+  if vim.fn.winnr('$') == 1 and last_tab_num == 1 then
+    return
+  end
+  local cur_buf = vim.fn.bufnr('%')
+
+  vim.api.nvim_win_close(0, true)
+
+  if direction == 'next' then
+    if vim.fn.tabpagenr() <= last_tab_num then
+      -- If closing the window didn't close the tab, then go to next tab
+      if last_tab_num == vim.fn.tabpagenr('$') then
+        vim.cmd('tabnext')
+      end
+      --- FIXME: It would be nice to keep orientation?
+      vim.cmd('split')
+    else
+      -- Open a tab after the current tab.
+      vim.cmd('tabnew')
+    end
+  else -- direction == 'previous'
+    if vim.fn.tabpagenr() ~= 1 then
+      -- If closing the window didn't close the tab, then go to prev tab
+      if last_tab_num == vim.fn.tabpagenr('$') then
+        vim.cmd('tabprevious')
+      end
+      --- FIXME: It would be nice to keep orientation?
+      vim.cmd('split')
+    else
+      -- Open a tab before the current tab.
+      vim.cmd('0tabnew')
+    end
+  end
+  vim.cmd('buffer ' .. cur_buf)
+end
+
+function M.move_split_to_previous_tab()
+  move_split_to_tab('previous')
+end
+
+function M.move_split_to_next_tab()
+  move_split_to_tab('next')
+end
+
 return M
