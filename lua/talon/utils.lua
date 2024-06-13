@@ -1,41 +1,8 @@
 local M = {}
 
-function M.dump_table(o, depth, max_depth)
-  local seen_tables = {}
-  local function dump(o, depth, max_depth)
-    depth = depth or 1
-    if max_depth and depth > max_depth then
-      return '{ ... }'
-    end
-    if seen_tables[o] then
-      return '{ DUPLICATE }'
-    end
-    seen_tables[o] = true
-    if type(o) == 'table' then
-      local s = '{ \n'
-      for k, v in pairs(o) do
-        if type(k) ~= 'number' then
-          k = '"' .. k .. '"'
-        end
-        s = s
-          .. string.rep(' ', depth * 2)
-          .. '['
-          .. k
-          .. '] = '
-          .. dump(v, depth + 1, max_depth)
-          .. ',\n'
-      end
-      return s .. string.rep(' ', (depth - 1) * 2) .. '}'
-    else
-      return tostring(o)
-    end
-  end
-  return dump(o, depth, max_depth)
-end
-
--- :lua print(require('talon.utils').is_platform_windows())
+-- :lua print(require('talon.utils').is_platform_windows()
 function M.is_platform_windows()
-  return package.config:sub(1, 1) == '\\'
+  return vim.uv.os_uname().version:find('Windows')
 end
 
 -- https://www.reddit.com/r/neovim/comments/tk1hby/get_the_path_to_the_current_lua_script_in_neovim/
@@ -51,9 +18,8 @@ function M.talon_nvim_path()
   -- skip as the file name is prefixed by "@"
   str = str:sub(2)
   -- print(('source_file2=%s'):format(str))
-  if require('talon.utils').is_platform_windows() then
+  if M.is_platform_windows() then
     str = str:gsub('/', '\\')
-    -- print('is_platform_windows')
   end
   -- print(('source_file3=%s'):format(str))
   -- remove where our current file is located to get talon.nvim base path
