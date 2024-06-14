@@ -18,8 +18,8 @@ local update_title = function()
 
   if mode == 't' then
     vim.o.titlestring = prefix .. ' TERM:' .. vim.b.term_title .. suffix
-    -- Adding TERM-N: to 'nt' allows us to trigger special app-specific functionality in NORMAL mode
-    -- from terminal applications
+  -- Adding TERM-N: to 'nt' allows us to trigger special app-specific functionality in NORMAL mode
+  -- from terminal applications
   elseif mode == 'nt' then
     vim.o.titlestring = prefix .. ' TERM-N:' .. vim.b.term_title .. suffix
   else
@@ -134,12 +134,21 @@ local function setup() -- setup(user_config)
     group = TalonGroup,
     pattern = 'talon',
   })
+
+  vim.api.nvim_create_user_command(
+    'MoveSplitToPreviousTab',
+    require('talon.utils').move_split_to_previous_tab,
+    {}
+  )
+  vim.api.nvim_create_user_command(
+    'MoveSplitToNextTab',
+    require('talon.utils').move_split_to_next_tab,
+    {}
+  )
 end
 
 local M = {
   setup = setup,
 }
-
-vim.cmd('source ' .. require('talon.utils').talon_nvim_path() .. '/vim/utils.vim')
 
 return M
