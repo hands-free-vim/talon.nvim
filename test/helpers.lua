@@ -1,0 +1,2 @@
+-- This file gets linked into plugin/helpers.lua of busted nvim config
+-- Functions that are exposed to all tests
