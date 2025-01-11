@@ -16,11 +16,11 @@ local update_title = function()
   -- FIXME: Make an option for user to suffix to this
   local suffix = ' (%f) %t'
 
-  if mode == 't' then
+  if mode == 't' and vim.b.term_title then
     vim.o.titlestring = prefix .. ' TERM:' .. vim.b.term_title .. suffix
   -- Adding TERM-N: to 'nt' allows us to trigger special app-specific functionality in NORMAL mode
   -- from terminal applications
-  elseif mode == 'nt' then
+  elseif mode == 'nt' and vim.b.term_title then
     vim.o.titlestring = prefix .. ' TERM-N:' .. vim.b.term_title .. suffix
   else
     vim.o.titlestring = prefix .. suffix
