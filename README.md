@@ -34,10 +34,12 @@ After the typical [lazy setup](https://github.com/folke/lazy.nvim?tab=readme-ov-
 ```lua
 require('lazy').setup({
   'hands-free-vim/talon.nvim',
-
+  opts = {},
   -- dependencies useful for neovim-talon
-  'dhruvasagar/vim-zoom',
-  'gcmt/taboo.vim',
+  dependencies = {
+    'dhruvasagar/vim-zoom',
+    'gcmt/taboo.vim',
+  },
 })
 ```
 
